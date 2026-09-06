@@ -43,5 +43,6 @@ namespace media
 
     void setPreferredSink(const std::string &sinkKind);
     AudioSink *createAudioSink();
+    AudioSink *createNullAudioSink();
 
 }

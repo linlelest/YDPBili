@@ -376,7 +376,7 @@ namespace media
             std::unique_ptr<AudioSink> localSink(createAudioSink());
             bool sinkReady = localSink->open(outSampleRate, outChannels);
             if (!sinkReady)
-                localSink = std::make_unique<NullAudioSink>();
+                localSink.reset(createNullAudioSink());
 
             SwrContext *swr = nullptr;
             AVChannelLayout outLayout;

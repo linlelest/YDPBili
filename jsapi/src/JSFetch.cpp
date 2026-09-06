@@ -17,6 +17,7 @@
 
 #include "JSFetch.hpp"
 
+#include "Exceptions/AssertFailed.hpp"
 #include "Fetch.hpp"
 
 void JSFetch::fetch(JQAsyncInfo &info)

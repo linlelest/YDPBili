@@ -16,6 +16,8 @@
 // along with miniapp.  If not, see <https://www.gnu.org/licenses/>.
 
 #include "JSMedia.hpp"
+#include "Exceptions/AssertFailed.hpp"
+#include "Media/AudioSink.hpp"
 #include <iostream>
 
 JSMedia::JSMedia() : mediaObject(nullptr) {}

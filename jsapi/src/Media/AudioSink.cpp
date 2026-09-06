@@ -281,6 +281,11 @@ namespace media
         uint64_t playedSamples() const override { return written; }
     };
 
+    AudioSink *createNullAudioSink()
+    {
+        return new NullAudioSink();
+    }
+
     AudioSink *createAudioSink()
     {
         int preferred = g_preferredSink.load();

@@ -19,6 +19,8 @@
 
 #include <jqutil_v2/jqutil.h>
 
+using namespace JQUTIL_NS;
+
 class JSFetch
 {
 public:
