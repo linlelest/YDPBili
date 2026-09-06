@@ -21,7 +21,7 @@
 
 using namespace JQUTIL_NS;
 
-class JSFetch
+class JSFetch : public JQBaseObject
 {
 public:
     void fetch(JQAsyncInfo &info);

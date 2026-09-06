@@ -76,8 +76,8 @@ namespace media
                 return fail();
             if (snd_pcm_hw_params_set_channels(handle, params, channels) < 0)
                 return fail();
-            unsigned int rate = (unsigned int)sampleRate;
-            if (snd_pcm_hw_params_set_rate_near(handle, params, &rate, 0) < 0)
+            unsigned int rateNear = (unsigned int)sampleRate;
+            if (snd_pcm_hw_params_set_rate_near(handle, params, &rateNear, 0) < 0)
                 return fail();
             snd_pcm_uframes_t bufferSize = 8192;
             snd_pcm_uframes_t periodSize = 1024;
