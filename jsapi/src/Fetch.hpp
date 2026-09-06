@@ -34,6 +34,7 @@
     } while (false)
 
 using StreamCallback = std::function<void(const std::string &chunk)>;
+using RawStreamCallback = std::function<void(const unsigned char *data, size_t size)>;
 
 class Response
 {

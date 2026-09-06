@@ -41,6 +41,23 @@ size_t Fetch::WriteCallback(void *contents, size_t size, size_t nmemb, std::stri
     data->append((char *)contents, totalSize);
     return totalSize;
 }
+size_t Fetch::RawWriteCallback(void *contents, size_t size, size_t nmemb, void *userdata)
+{
+    size_t totalSize = size * nmemb;
+    try
+    {
+        const FetchOptions *options = static_cast<const FetchOptions *>(userdata);
+        if (options && options->cancelled && options->cancelled->load())
+            return 0;
+        if (options && options->rawStreamCallback)
+            options->rawStreamCallback((const unsigned char *)contents, totalSize);
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << "Raw write callback error: " << e.what() << std::endl;
+    }
+    return totalSize;
+}
 
 static int xferinfo(void *clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
