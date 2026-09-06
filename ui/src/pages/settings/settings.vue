@@ -58,6 +58,33 @@
                 </div>
             </div>
 
+            <text class="group-title">弹幕</text>
+            <div class="card">
+                <text class="item-label">默认弹幕</text>
+                <div class="chips">
+                    <div :class="settings.danmakuEnabled ? 'chip chip-active' : 'chip'"
+                        @click="onDanmakuToggle(true)">
+                        <text :class="settings.danmakuEnabled ? 'chip-text-active' : 'chip-text'">开</text>
+                    </div>
+                    <div :class="settings.danmakuEnabled ? 'chip' : 'chip chip-active'"
+                        @click="onDanmakuToggle(false)">
+                        <text :class="settings.danmakuEnabled ? 'chip-text' : 'chip-text-active'">关</text>
+                    </div>
+                </div>
+                <text class="item-note">弹幕在视频播放页生效</text>
+            </div>
+            <div class="card">
+                <text class="item-label">弹幕字号</text>
+                <div class="chips">
+                    <div v-for="f in danmakuFontItems" :key="f.value"
+                        :class="settings.danmakuFontSize === f.value ? 'chip chip-active' : 'chip'"
+                        @click="onDanmakuFont(f.value)">
+                        <text
+                            :class="settings.danmakuFontSize === f.value ? 'chip-text-active' : 'chip-text'">{{ f.label }}</text>
+                    </div>
+                </div>
+            </div>
+
             <text class="group-title">数据</text>
             <div class="card">
                 <div class="action-row" @click="onClearCache">

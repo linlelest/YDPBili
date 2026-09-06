@@ -24,7 +24,7 @@
  * - 综合搜索：GET /x/web-interface/wbi/search/all/v2（WBI + buvid3）
  *   参数 keyword；固定返回第 1 页 20 条 + 各分类计数（data.pageinfo/top_tlist）。
  * - 分类搜索：GET /x/web-interface/wbi/search/type（WBI + buvid3）
- *   参数 search_type=video/article、page（从 1 起）、page_size（≤50）。
+ *   参数 search_type=video/article/bili_user、page（从 1 起）、page_size（≤50）。
  */
 
 import { biliGet } from '../http.js';
@@ -108,7 +108,7 @@ export async function searchVideos(keyword, page = 1, pageSize = 20) {
 }
 
 /**
- * 分类搜索：图文（专栏文章）。
+ * 分类搜索：专栏（图文文章）。
  * @param {string} keyword
  * @param {number} [page=1] 页码（从 1 开始）
  * @param {number} [pageSize=20] 每页条数（≤50）
@@ -133,4 +133,37 @@ export async function searchArticles(keyword, page = 1, pageSize = 20) {
     reply: it.reply || 0,
   }));
   return { items, total: (data && data.numResults) || 0 };
+}
+
+/**
+ * 分类搜索：用户。
+ * @param {string} keyword
+ * @param {number} [page=1] 页码（从 1 开始）
+ * @param {number} [pageSize=20] 每页条数（≤50）
+ * @returns {Promise<{items: Array, total: number}>}
+ *   items: [{mid, uname, usign, upic, fans, videos}]
+ */
+export async function searchUsers(keyword, page = 1, pageSize = 20) {
+  await ensureSearchReady();
+  const data = await biliGet('/x/web-interface/wbi/search/type', {
+    params: { search_type: 'bili_user', keyword, page, page_size: pageSize },
+    wbi: true,
+  });
+  const items = ((data && data.result) || []).map((it) => ({
+    mid: it.mid || 0,
+    uname: stripEm(it.uname),
+    usign: stripEm(it.usign),
+    upic: it.upic || '',
+    fans: it.fans || 0,
+    videos: userVideoCount(it),
+  }));
+  return { items, total: (data && data.numResults) || 0 };
+}
+
+/** 稿件数：videos 数字为准；老版本仅返回 videostt（如 "3623个视频"）时从中提取。 */
+function userVideoCount(it) {
+  const num = Number(it.videos);
+  if (num > 0) return num;
+  const matched = String(it.videostt || '').match(/\d+/);
+  return matched ? parseInt(matched[0], 10) : 0;
 }

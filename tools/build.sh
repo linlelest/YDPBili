@@ -87,7 +87,7 @@ function build_native() {
     log_info "Building native library..."
     
     log_verbose "Running cmake configuration..."
-    if ! cmake -S jsapi -B jsapi/build; then
+    if ! cmake -S jsapi -B jsapi/build ${EXTRA_CMAKE_FLAGS:-}; then
         log_error "CMake configuration failed"
         return 1
     fi

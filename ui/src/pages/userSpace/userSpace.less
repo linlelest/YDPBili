@@ -1,0 +1,386 @@
+// userSpace.less —— 用户主页（280 宽深色主题）
+@import '../styles/theme.less';
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.body {
+    flex: 1;
+}
+
+.loading-zone {
+    padding: 96px 0;
+    align-items: center;
+}
+
+.error-zone {
+    padding: 64px 0;
+    align-items: center;
+}
+
+.btn-retry {
+    margin-top: 16px;
+    padding: 8px 32px;
+    border-radius: @radius-round;
+    border-width: 1px;
+    border-color: @primary;
+    align-items: center;
+}
+
+.btn-retry-text {
+    color: @primary;
+    font-size: @font-base;
+}
+
+.header {
+    background-color: @card;
+    padding: @card-pad;
+}
+
+.header-main {
+    flex-direction: row;
+    align-items: center;
+}
+
+.avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: @radius-round;
+    background-color: @card-pressed;
+}
+
+.avatar-fallback {
+    color: @text-secondary;
+    font-size: @font-lg;
+    line-height: 96px;
+    text-align: center;
+}
+
+.header-info {
+    flex: 1;
+    margin-left: @card-pad;
+}
+
+.name-row {
+    flex-direction: row;
+    align-items: center;
+}
+
+.name {
+    color: @text;
+    font-size: @font-title;
+    font-weight: bold;
+    lines: 1;
+    text-overflow: ellipsis;
+    flex: 1;
+}
+
+.lv-badge {
+    margin-left: 8px;
+    padding: 2px 8px;
+    border-radius: @radius-sm;
+    background-color: @primary;
+    color: #ffffff;
+    font-size: @font-xs;
+}
+
+.official-row {
+    margin-top: 6px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.official-badge {
+    padding: 2px 8px;
+    border-radius: @radius-sm;
+    background-color: rgba(251, 114, 153, 0.16);
+    color: @primary;
+    font-size: @font-xs;
+}
+
+.official-badge.org {
+    background-color: rgba(76, 175, 80, 0.16);
+    color: @success;
+}
+
+.sign {
+    margin-top: @card-pad;
+    color: @text-secondary;
+    font-size: @font-sm;
+    line-height: 30px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.stat-row {
+    margin-top: 12px;
+    flex-direction: row;
+}
+
+.stat-item {
+    flex-direction: row;
+    align-items: baseline;
+    margin-right: 32px;
+}
+
+.stat-num {
+    color: @text;
+    font-size: @font-md;
+    font-weight: bold;
+}
+
+.stat-label {
+    margin-left: 6px;
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.tabs {
+    margin-top: @card-gap;
+    flex-direction: row;
+    background-color: @card;
+}
+
+.tab {
+    flex: 1;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-text {
+    color: @text-secondary;
+    font-size: @font-base;
+}
+
+.tab-text-active {
+    color: @primary;
+    font-weight: bold;
+}
+
+.tab-indicator {
+    margin-top: 6px;
+    width: 40px;
+    height: 4px;
+    border-radius: @radius-round;
+    background-color: transparent;
+}
+
+.tab-indicator-active {
+    background-color: @primary;
+}
+
+.tab-content {
+    padding: @page-pad;
+}
+
+.v-row {
+    flex-direction: row;
+    background-color: @card;
+    border-radius: @radius-md;
+    padding: 8px;
+    margin-bottom: @card-gap;
+}
+
+.v-cover {
+    width: 128px;
+    height: 80px;
+    border-radius: @radius-sm;
+    background-color: @card-pressed;
+}
+
+.v-info {
+    flex: 1;
+    margin-left: 10px;
+    justify-content: center;
+}
+
+.v-title {
+    color: @text;
+    font-size: @font-base;
+    line-height: 30px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.v-meta {
+    margin-top: 6px;
+    color: @text-secondary;
+    font-size: @font-xs;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.article-item {
+    margin-bottom: @card-gap;
+}
+
+.dyn-card {
+    background-color: @card;
+    border-radius: @radius-md;
+    padding: @card-pad;
+    margin-bottom: @card-gap;
+}
+
+.dyn-head-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dyn-type {
+    color: @primary;
+    font-size: @font-xs;
+}
+
+.dyn-time {
+    color: @text-disabled;
+    font-size: @font-xs;
+}
+
+.dyn-text {
+    margin-top: 8px;
+    color: @text;
+    font-size: @font-sm;
+    line-height: 30px;
+}
+
+.row-card {
+    margin-top: 10px;
+    flex-direction: row;
+    align-items: center;
+    background-color: @card-pressed;
+    border-radius: @radius-sm;
+    padding: 8px;
+}
+
+.row-cover {
+    width: 96px;
+    height: 60px;
+    border-radius: @radius-sm;
+    background-color: @divider;
+}
+
+.row-info {
+    flex: 1;
+}
+
+.row-title {
+    color: @text;
+    font-size: @font-sm;
+    line-height: 28px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.row-meta {
+    margin-top: 4px;
+    color: @text-secondary;
+    font-size: @font-xs;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.row-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: @radius-sm;
+    background-color: @divider;
+    margin-left: 8px;
+}
+
+.grid {
+    margin-top: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.grid-cell {
+    width: 72px;
+    height: 72px;
+    border-radius: @radius-sm;
+    background-color: @divider;
+    margin-bottom: 8px;
+}
+
+.orig-card {
+    margin-top: 10px;
+    flex-direction: row;
+    align-items: center;
+    background-color: @card-pressed;
+    border-radius: @radius-sm;
+    padding: 8px;
+    border-left-width: 3px;
+    border-left-color: @primary-dark;
+}
+
+.orig-cover {
+    width: 72px;
+    height: 48px;
+    border-radius: @radius-sm;
+    background-color: @divider;
+}
+
+.orig-info {
+    flex: 1;
+    margin-left: 8px;
+}
+
+.orig-title {
+    color: @text;
+    font-size: @font-sm;
+    line-height: 28px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.orig-meta {
+    margin-top: 2px;
+    color: @text-secondary;
+    font-size: @font-xs;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.load-more {
+    height: 64px;
+    background-color: @card;
+    border-radius: @radius-md;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: @card-gap;
+}
+
+.load-more-text {
+    color: @primary;
+    font-size: @font-base;
+}
+
+.no-more {
+    color: @text-disabled;
+    font-size: @font-sm;
+    text-align: center;
+    padding: 16px;
+}
+
+.notice-mask {
+    position: absolute;
+    left: @page-pad;
+    right: @page-pad;
+    bottom: 48px;
+    background-color: @mask;
+    border-radius: @radius-sm;
+    padding: 12px;
+    align-items: center;
+}
+
+.notice-text {
+    color: #ffffff;
+    font-size: @font-sm;
+    text-align: center;
+    lines: 2;
+}

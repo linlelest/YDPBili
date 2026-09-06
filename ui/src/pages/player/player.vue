@@ -70,6 +70,23 @@
             <div v-if="isPreparing" class="stage-loading">
                 <loading :visible="true" text="正在取流..."></loading>
             </div>
+
+            <danmaku-layer
+                v-if="isVideoMode"
+                :items="danmakuItems"
+                :pos-ms="positionMs"
+                :playing="playing"
+                :enabled="danmakuOn"
+                :font-size="danmakuFontSize"
+                :reset-key="danmakuResetKey"
+            ></danmaku-layer>
+            <div
+                v-if="(isVideoMode || isAudioMode) && subtitleLine"
+                class="subtitle-bar"
+                @click="onSubtitleBarTap"
+            >
+                <text class="subtitle-line">{{ subtitleLine }}</text>
+            </div>
         </div>
 
         <div class="info-row">
@@ -122,6 +139,40 @@
             </div>
             <div class="action-btn" @click="onToggleQualityPanel">
                 <text class="action-text">画质 {{ qualityText }}</text>
+            </div>
+        </div>
+
+        <div v-if="isVideoMode || isAudioMode" class="overlay-row">
+            <div
+                :class="subtitleAvailable ? 'overlay-btn' : 'overlay-btn overlay-btn-disabled'"
+                @click="onToggleSubtitle"
+            >
+                <text
+                    :class="subtitleAvailable ? 'overlay-btn-text' : 'overlay-btn-text overlay-btn-text-disabled'"
+                >{{ subtitleBtnText }}</text>
+            </div>
+            <div class="overlay-btn" @click="onToggleDanmaku">
+                <text class="overlay-btn-text">{{ danmakuBtnText }}</text>
+            </div>
+        </div>
+
+        <div v-if="showSubtitlePanel && subtitleAvailable" class="subtitle-panel">
+            <text class="subtitle-panel-title">字幕语言{{ subtitleCurrentDoc ? ' · 当前 ' + subtitleCurrentDoc : '' }}</text>
+            <div
+                v-for="track in subtitleTracks"
+                :key="track.lan"
+                :class="track.lan === subtitleLan ? 'subtitle-item-current' : 'subtitle-item'"
+                @click="onSubtitlePick(track)"
+            >
+                <text
+                    :class="track.lan === subtitleLan ? 'subtitle-item-text-current' : 'subtitle-item-text'"
+                >{{ track.lanDoc }}</text>
+            </div>
+            <div class="subtitle-item" @click="onSubtitleOff">
+                <text class="subtitle-item-text">关闭字幕</text>
+            </div>
+            <div v-if="subtitleLoading" class="subtitle-item subtitle-item-hint">
+                <text class="subtitle-item-text-hint">正在加载字幕...</text>
             </div>
         </div>
 

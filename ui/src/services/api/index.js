@@ -21,8 +21,25 @@
 
 export { getUserInfo } from './nav.js';
 export { getRecommendFeed } from './recommend.js';
-export { ensureSearchReady, searchAll, searchVideos, searchArticles, stripEm } from './search.js';
+export { ensureSearchReady, searchAll, searchVideos, searchArticles, searchUsers, stripEm } from './search.js';
 export { getVideoDetail, getRelated, getPlayUrl } from './video.js';
 export { getArticleDetail } from './article.js';
+export { getSubtitleTracks, getSubtitleBody, findSubtitleLine } from './subtitle.js';
+export { getDanmaku, parseDanmakuXml, decodeXmlEntities } from './danmaku.js';
 export { getDynamicFeed, normalizeDynamicItem } from './dynamic.js';
+export {
+  getUserSpaceInfo,
+  getUserVideos,
+  getUserArticles,
+  getUserDynamics,
+} from './space.js';
 export { getHistory } from './history.js';
+export { getComments, addComment } from './reply.js';
+export {
+  hasLiked,
+  getCoinsInfo,
+  getFollowState,
+  likeVideo,
+  coinVideo,
+  followUser,
+} from './interaction.js';

@@ -20,13 +20,32 @@
 <template>
     <div class="keyboard">
         <div class="kb-topbar">
-            <div class="kb-seg-btn" @click="toggleSegment">
-                <text class="kb-seg-text">{{ segment === 'letter' ? '123 符号' : '字母' }}</text>
+            <div class="kb-top-btn" @click="toggleSegment">
+                <text class="kb-top-text">{{ segment === 'letter' ? '符号' : '字母' }}</text>
+            </div>
+            <div class="kb-top-btn kb-top-lang" @click="toggleLang">
+                <text :class="langBtnClass">{{ lang === 'pinyin' ? '中' : 'EN' }}</text>
             </div>
             <text class="kb-title">拼音/英文键盘</text>
-            <div class="kb-collapse" @click="emitClose">
-                <text class="kb-collapse-text">收起</text>
+            <div class="kb-top-btn" @click="emitClose">
+                <text class="kb-top-text">收起</text>
             </div>
+        </div>
+        <div class="kb-cand">
+            <text class="kb-cand-pinyin" v-if="pinyinMode">{{ buf || '拼音' }}</text>
+            <text class="kb-cand-hint" v-else>{{ segment === 'symbol' ? '符号直接上屏' : '英文直接上屏' }}</text>
+            <scroller class="kb-cand-scroll" scroll-direction="horizontal" v-if="pinyinMode && candidates.length > 0">
+                <div class="kb-cand-row">
+                    <div
+                        class="kb-cand-item"
+                        v-for="(cand, ci) in candidates"
+                        :key="'c' + ci"
+                        @click="commit(cand)">
+                        <text class="kb-cand-text">{{ cand }}</text>
+                    </div>
+                </div>
+            </scroller>
+            <text class="kb-cand-empty" v-else-if="pinyinMode">键入拼音显示候选</text>
         </div>
         <div class="kb-grid">
             <div class="kb-row" v-for="(row, ri) in currentRows" :key="'r' + ri">
@@ -42,7 +61,7 @@
         </div>
         <div class="kb-funcrow">
             <div class="kb-func kb-space" @click="emitSpace">
-                <text class="kb-func-text">空格</text>
+                <text class="kb-func-text">{{ pinyinMode && buf ? '上屏首选' : '空格' }}</text>
             </div>
             <div class="kb-func kb-confirm" @click="emitConfirm">
                 <text class="kb-confirm-text">搜索</text>
@@ -72,8 +91,8 @@
     border-bottom-color: @divider;
 }
 
-.kb-seg-btn {
-    width: 96px;
+.kb-top-btn {
+    width: 64px;
     height: 40px;
     background-color: @card-pressed;
     border-radius: @radius-sm;
@@ -81,8 +100,23 @@
     justify-content: center;
 }
 
-.kb-seg-text {
+.kb-top-lang {
+    margin-left: 8px;
+    background-color: transparent;
+}
+
+.kb-top-text {
     color: @text;
+    font-size: @font-sm;
+}
+
+.kb-lang-text {
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.kb-lang-text-active {
+    color: @primary;
     font-size: @font-sm;
 }
 
@@ -93,16 +127,59 @@
     text-align: center;
 }
 
-.kb-collapse {
-    width: 96px;
-    height: 40px;
+.kb-cand {
+    width: @page-width;
+    height: 64px;
+    flex-direction: row;
     align-items: center;
+    background-color: @bg;
+    border-bottom-width: 1px;
+    border-bottom-color: @divider;
+}
+
+.kb-cand-pinyin {
+    width: 76px;
+    padding-left: 8px;
+    color: @primary;
+    font-size: @font-sm;
+    lines: 1;
+}
+
+.kb-cand-hint {
+    width: 76px;
+    padding-left: 8px;
+    color: @text-disabled;
+    font-size: @font-xs;
+    lines: 1;
+}
+
+.kb-cand-scroll {
+    flex: 1;
+    height: 64px;
+}
+
+.kb-cand-row {
+    flex-direction: row;
+    align-items: center;
+    height: 64px;
+}
+
+.kb-cand-item {
+    height: 64px;
+    padding-left: 12px;
+    padding-right: 12px;
     justify-content: center;
 }
 
-.kb-collapse-text {
-    color: @text-secondary;
-    font-size: @font-sm;
+.kb-cand-text {
+    color: @text;
+    font-size: @font-base;
+}
+
+.kb-cand-empty {
+    flex: 1;
+    color: @text-disabled;
+    font-size: @font-xs;
 }
 
 .kb-grid {
@@ -181,6 +258,10 @@
 </style>
 
 <script>
+import { createPinyinEngine } from '../../utils/pinyin-engine.js';
+
+const engine = createPinyinEngine();
+
 const LETTER_ROWS = [
     'abcdef',
     'ghijkl',
@@ -190,25 +271,27 @@ const LETTER_ROWS = [
 ];
 
 const SYMBOL_ROWS = [
-    '123456',
-    '7890-_',
-    ':/.?!&',
-    '@#%*=+',
-    "'$",
+    ['，', '。', '？', '！', '：', '；'],
+    ['、', '"', "'", '（', '）', '《'],
+    ['》', '…', '—', '·', '@', '#'],
+    ['%', '&', '*', '-', '+', '/'],
+    ['=', '.', ',', '!'],
 ];
 
 const ACTION_CLEAR = 'clear';
 const ACTION_BACKSPACE = 'backspace';
+const ACTION_SHIFT = 'shift';
 const ACTION_PAD = 'pad';
 
 const CLEAR_KEY = { actionLabel: '清空', action: ACTION_CLEAR };
 const BACKSPACE_KEY = { actionLabel: '⌫', action: ACTION_BACKSPACE };
+const SHIFT_KEY = { actionLabel: '大写', action: ACTION_SHIFT };
 const PAD_KEY = { action: ACTION_PAD };
 
 function buildRows(rows) {
     const out = [];
     for (let r = 0; r < rows.length; r++) {
-        const chars = String(rows[r]).split('');
+        const chars = Array.isArray(rows[r]) ? rows[r] : String(rows[r]).split('');
         const line = chars.map((ch) => ({ label: ch, action: 'input', value: ch }));
         if (r === rows.length - 1) {
             while (line.length < 2) line.push(PAD_KEY);
@@ -225,34 +308,117 @@ export default {
     data() {
         return {
             segment: 'letter',
+            lang: 'pinyin',
+            shift: false,
+            buf: '',
+            candidates: [],
             letterRows: buildRows(LETTER_ROWS),
             symbolRows: buildRows(SYMBOL_ROWS),
         };
     },
+    created() {
+        this.letterRows[4].splice(2, 0, SHIFT_KEY);
+    },
     computed: {
+        pinyinMode() {
+            return this.segment === 'letter' && this.lang === 'pinyin';
+        },
+        langBtnClass() {
+            return this.lang === 'pinyin' ? 'kb-lang-text kb-lang-text-active' : 'kb-lang-text';
+        },
         currentRows() {
-            return this.segment === 'letter' ? this.letterRows : this.symbolRows;
+            const rows = this.segment === 'letter' ? this.letterRows : this.symbolRows;
+            if (this.segment !== 'letter') return rows;
+            return rows.map((row) => row.map((key) => {
+                if (key.action === ACTION_SHIFT) {
+                    return { actionLabel: this.shift ? '小写' : '大写', action: ACTION_SHIFT };
+                }
+                if (key.action === 'input' && this.shift && key.label) {
+                    return { label: key.label.toUpperCase(), action: 'input', value: key.value };
+                }
+                return key;
+            }));
         },
     },
     methods: {
+        updateCandidates() {
+            this.candidates = this.buf ? engine.suggest(this.buf, 9) : [];
+        },
+        commit(cand) {
+            this.$emit('input', String(cand));
+            this.buf = '';
+            this.candidates = [];
+        },
+        commitTop() {
+            const top = this.candidates.length > 0 ? this.candidates[0] : this.buf;
+            if (top) this.commit(top);
+        },
+        flushBuf() {
+            if (this.buf) this.commitTop();
+        },
         toggleSegment() {
+            this.flushBuf();
             this.segment = this.segment === 'letter' ? 'symbol' : 'letter';
+            this.shift = false;
+        },
+        toggleLang() {
+            this.flushBuf();
+            this.lang = this.lang === 'pinyin' ? 'en' : 'pinyin';
+            this.shift = false;
         },
         onKeyClick(key) {
             if (!key || !key.action || key.action === ACTION_PAD) return;
             if (key.action === 'input') {
-                this.$emit('input', key.value || '');
-            } else if (key.action === ACTION_CLEAR) {
-                this.$emit('clear');
-            } else if (key.action === ACTION_BACKSPACE) {
-                this.$emit('backspace');
+                if (this.segment === 'symbol') {
+                    this.$emit('input', key.value || '');
+                    return;
+                }
+                const ch = String(key.value || '');
+                if (this.lang === 'en') {
+                    this.$emit('input', this.shift ? ch.toUpperCase() : ch);
+                    this.shift = false;
+                } else {
+                    this.buf += ch.toLowerCase();
+                    this.shift = false;
+                    this.updateCandidates();
+                }
+                return;
+            }
+            if (key.action === ACTION_SHIFT) {
+                this.shift = !this.shift;
+                return;
+            }
+            if (key.action === ACTION_CLEAR) {
+                if (this.buf) {
+                    this.buf = '';
+                    this.candidates = [];
+                } else {
+                    this.$emit('clear');
+                }
+                return;
+            }
+            if (key.action === ACTION_BACKSPACE) {
+                if (this.buf) {
+                    this.buf = this.buf.slice(0, -1);
+                    this.updateCandidates();
+                } else {
+                    this.$emit('backspace');
+                }
             }
         },
         emitSpace() {
-            this.$emit('space');
+            if (this.pinyinMode && this.buf) {
+                this.commitTop();
+            } else {
+                this.$emit('space');
+            }
         },
         emitConfirm() {
-            this.$emit('confirm');
+            if (this.pinyinMode && this.buf) {
+                this.commitTop();
+            } else {
+                this.$emit('confirm');
+            }
         },
         emitClose() {
             this.$emit('close');

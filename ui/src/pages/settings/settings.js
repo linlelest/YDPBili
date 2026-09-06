@@ -85,6 +85,10 @@ const page = defineComponent({
         label: RATE_LABELS[r] || String(r) + 'x',
       })),
       decoderItems: DECODER_ITEMS,
+      danmakuFontItems: DANMAKU_FONT_OPTIONS.map((f) => ({
+        value: f,
+        label: DANMAKU_FONT_LABELS[f] || String(f),
+      })),
     };
   },
   created() {
@@ -142,6 +146,16 @@ const page = defineComponent({
     onDecoder(value) {
       if (this.settings.decoder === value) return;
       this.applySettings({ decoder: value });
+    },
+
+    onDanmakuToggle(value) {
+      if (this.settings.danmakuEnabled === value) return;
+      this.applySettings({ danmakuEnabled: value });
+    },
+
+    onDanmakuFont(value) {
+      if (this.settings.danmakuFontSize === value) return;
+      this.applySettings({ danmakuFontSize: value });
     },
 
     async onClearCache() {

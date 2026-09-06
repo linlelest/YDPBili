@@ -97,8 +97,11 @@
     text-overflow: ellipsis;
 }
 
+// 头像 36px + 上下 padding 14px = 64px 触控热区
 .up-row {
-    margin-top: 16px;
+    margin-top: 8px;
+    padding-top: 14px;
+    padding-bottom: 14px;
     flex-direction: row;
     align-items: center;
 }
@@ -125,6 +128,12 @@
     font-size: @font-sm;
 }
 
+.up-arrow {
+    margin-left: 8px;
+    color: @text-disabled;
+    font-size: @font-md;
+}
+
 .stat-row {
     margin-top: 16px;
     flex-direction: row;
@@ -145,6 +154,153 @@
     margin-top: 4px;
     color: @text-secondary;
     font-size: @font-xs;
+}
+
+// 互动条（点赞 / 投币 / 关注），哔哩粉主题
+.interaction-bar {
+    margin-top: 20px;
+    flex-direction: row;
+}
+
+.interact-btn {
+    flex: 1;
+    height: 80px;
+    border-radius: @radius-round;
+    background-color: @card;
+    border-width: 1px;
+    border-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.interact-btn-gap {
+    margin-left: 12px;
+}
+
+.interact-btn-on {
+    background-color: @primary;
+    border-color: @primary;
+}
+
+.interact-btn-primary {
+    background-color: @primary;
+    border-color: @primary;
+}
+
+.interact-btn-followed {
+    background-color: @card;
+    border-color: @divider;
+}
+
+.interact-text {
+    color: @primary;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.interact-text-on {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.interact-text-primary {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.interact-text-followed {
+    color: @text-secondary;
+}
+
+// 投币数量选择面板
+.coin-panel {
+    margin-top: 12px;
+    padding: @card-pad;
+    background-color: @card;
+    border-radius: @radius-md;
+    border-width: 1px;
+    border-color: @divider;
+}
+
+.coin-panel-title {
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.coin-panel-row {
+    margin-top: 12px;
+    flex-direction: row;
+}
+
+.coin-option {
+    flex: 1;
+    height: 64px;
+    border-radius: @radius-round;
+    background-color: @card-pressed;
+    border-width: 1px;
+    border-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.coin-option + .coin-option {
+    margin-left: 12px;
+}
+
+.coin-option-text {
+    color: @primary;
+    font-size: @font-sm;
+}
+
+.coin-option-cancel {
+    border-color: @divider;
+}
+
+.coin-option-cancel-text {
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+// 评论区入口（互动条下方）
+.comments-entry {
+    margin-top: 16px;
+    height: 64px;
+    padding-left: 24px;
+    padding-right: 24px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: @radius-round;
+    background-color: @card;
+    border-width: 1px;
+    border-color: @primary;
+}
+
+.comments-entry-text {
+    color: @primary;
+    font-size: @font-base;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+// 轻提示（同 comments 页样式）
+.toast {
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    bottom: 420px;
+    background-color: @mask;
+    border-radius: @radius-sm;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast-text {
+    color: #ffffff;
+    font-size: @font-base;
+    text-align: center;
 }
 
 .desc-block {

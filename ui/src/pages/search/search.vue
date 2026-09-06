@@ -23,7 +23,7 @@
 
         <div class="search-row">
             <div class="input-box" @click="openKeyboard">
-                <text class="input-placeholder" v-if="!keyword">搜索视频、图文</text>
+                <text class="input-placeholder" v-if="!keyword">搜索视频、专栏、用户</text>
                 <text class="input-text" v-else>{{ keyword }}</text>
             </div>
             <div class="search-btn" @click="onSearch">
@@ -59,8 +59,12 @@
                 <div class="tab-line" v-if="activeTab === 'video'"></div>
             </div>
             <div class="tab-item" @click="switchTab('article')">
-                <text :class="tabClass('article')">图文</text>
+                <text :class="tabClass('article')">专栏</text>
                 <div class="tab-line" v-if="activeTab === 'article'"></div>
+            </div>
+            <div class="tab-item" @click="switchTab('user')">
+                <text :class="tabClass('user')">用户</text>
+                <div class="tab-line" v-if="activeTab === 'user'"></div>
             </div>
         </div>
 
@@ -73,6 +77,11 @@
             <div class="result-list" v-if="activeTab === 'article' && articles.length > 0">
                 <div class="list-item" v-for="item in articles" :key="item.id" @click="openArticle(item)">
                     <article-card :article="item"></article-card>
+                </div>
+            </div>
+            <div class="result-list" v-if="activeTab === 'user' && users.length > 0">
+                <div class="list-item" v-for="item in users" :key="item.mid" @click="openUser(item)">
+                    <user-card :user="item"></user-card>
                 </div>
             </div>
 

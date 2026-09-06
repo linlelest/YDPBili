@@ -1,5 +1,6 @@
 # Build output
 dist/
+build/
 jsapi/build/
 
 # Toolchain (downloaded at build time, not committed)
@@ -35,6 +36,9 @@ cmake_install.cmake
 
 # Generated at build time from rawdict_utf16_65105_freq.txt
 jsapi/src/IME/rawdict_data.hpp
+
+# Pinyin raw source data (15MB, re-downloadable via tools/gen-pinyin-dict.js)
+tools/pinyin-src/
 
 # macOS
 .DS_Store

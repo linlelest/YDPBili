@@ -40,7 +40,7 @@ export const PLAYBACK_RATE_OPTIONS = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 
 /**
  * 读取设置（浅合并默认值，非法 decoder 回退 auto）。
- * @returns {Promise<{videoQuality: number, playbackRate: number, decoder: string}>}
+ * @returns {Promise<{videoQuality: number, playbackRate: number, decoder: string, danmakuEnabled: boolean, danmakuFontSize: number}>}
  */
 export async function getSettings() {
   const stored = await storageGet(SETTINGS_KEY, null);
@@ -59,7 +59,7 @@ export async function getSettings() {
 
 /**
  * 写入设置（浅合并）。
- * @param {Partial<{videoQuality: number, playbackRate: number, decoder: string}>} patch
+ * @param {Partial<{videoQuality: number, playbackRate: number, decoder: string, danmakuEnabled: boolean, danmakuFontSize: number}>} patch
  * @returns {Promise<Object>} 合并后的完整设置
  */
 export async function setSettings(patch) {

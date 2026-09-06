@@ -286,6 +286,109 @@
     justify-content: space-between;
 }
 
+// 字幕条：视频区下沿，半透明底白字单行
+.subtitle-bar {
+    position: absolute;
+    left: 0;
+    bottom: 4px;
+    width: @page-width;
+    padding: 4px 12px;
+    background-color: rgba(0, 0, 0, 0.55);
+    justify-content: center;
+}
+
+.subtitle-line {
+    color: #ffffff;
+    font-size: 24px;
+    lines: 1;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+// CC / 💬 控制行（触控热区 56px 高）
+.overlay-row {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 8px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.overlay-btn {
+    width: 120px;
+    height: 56px;
+    border-radius: @radius-sm;
+    background-color: @card;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-btn-disabled {
+    opacity: 0.45;
+}
+
+.overlay-btn-text {
+    color: @text;
+    font-size: @font-sm;
+}
+
+.overlay-btn-text-disabled {
+    color: @text-disabled;
+}
+
+// 字幕语言面板
+.subtitle-panel {
+    margin-left: @page-pad;
+    margin-right: @page-pad;
+    margin-top: 12px;
+    border-radius: @radius-md;
+    background-color: @card;
+    padding: 12px;
+}
+
+.subtitle-panel-title {
+    color: @text-secondary;
+    font-size: @font-xs;
+    margin-bottom: 8px;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.subtitle-item {
+    height: 56px;
+    border-radius: @radius-sm;
+    justify-content: center;
+    padding-left: 12px;
+}
+
+.subtitle-item-current {
+    height: 56px;
+    border-radius: @radius-sm;
+    justify-content: center;
+    padding-left: 12px;
+    background-color: @card-pressed;
+}
+
+.subtitle-item-hint {
+    height: 40px;
+}
+
+.subtitle-item-text {
+    color: @text-secondary;
+    font-size: @font-base;
+}
+
+.subtitle-item-text-current {
+    color: @primary;
+    font-size: @font-base;
+}
+
+.subtitle-item-text-hint {
+    color: @text-disabled;
+    font-size: @font-xs;
+}
+
 .action-btn {
     width: 120px;
     height: 56px;

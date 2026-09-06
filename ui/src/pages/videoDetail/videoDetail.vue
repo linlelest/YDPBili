@@ -45,7 +45,7 @@
                 </div>
                 <div class="head">
                     <text class="video-title">{{ detail.title }}</text>
-                    <div class="up-row">
+                    <div class="up-row" @click="onUpClick">
                         <image
                             v-if="detail.owner.face"
                             class="avatar"
@@ -55,6 +55,7 @@
                         <div v-else class="avatar"></div>
                         <text class="up-name">{{ detail.owner.name || '未知UP主' }}</text>
                         <text class="pub-date">{{ pubDateText }}</text>
+                        <text class="up-arrow">›</text>
                     </div>
                     <div class="stat-row">
                         <div
@@ -65,6 +66,44 @@
                             <text class="stat-value">{{ item.value }}</text>
                             <text class="stat-label">{{ item.label }}</text>
                         </div>
+                    </div>
+                    <div class="interaction-bar">
+                        <div
+                            :class="liked ? 'interact-btn interact-btn-on' : 'interact-btn'"
+                            @click="onLikeClick"
+                        >
+                            <text :class="liked ? 'interact-text interact-text-on' : 'interact-text'">👍 点赞 ({{ likeCountText }})</text>
+                        </div>
+                        <div
+                            :class="coinsGiven > 0 ? 'interact-btn interact-btn-gap interact-btn-on' : 'interact-btn interact-btn-gap'"
+                            @click="onCoinClick"
+                        >
+                            <text :class="coinsGiven > 0 ? 'interact-text interact-text-on' : 'interact-text'">{{ coinBtnText }}</text>
+                        </div>
+                        <div
+                            :class="followed ? 'interact-btn interact-btn-gap interact-btn-followed' : 'interact-btn interact-btn-gap interact-btn-primary'"
+                            @click="onFollowClick"
+                        >
+                            <text :class="followed ? 'interact-text interact-text-followed' : 'interact-text interact-text-primary'">{{ followBtnText }}</text>
+                        </div>
+                    </div>
+                    <div v-if="coinPanelVisible" class="coin-panel">
+                        <text class="coin-panel-title">选择投币数量</text>
+                        <div class="coin-panel-row">
+                            <div class="coin-option" @click="onCoinSelect(1)">
+                                <text class="coin-option-text">🪙 投 1 枚</text>
+                            </div>
+                            <div class="coin-option coin-option-gap" @click="onCoinSelect(2)">
+                                <text class="coin-option-text">🪙 投 2 枚</text>
+                            </div>
+                            <div class="coin-option coin-option-gap coin-option-cancel" @click="onCoinCancel">
+                                <text class="coin-option-cancel-text">取消</text>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comments-entry" @click="onCommentsClick">
+                        <text class="comments-entry-text">💬 评论区 ({{ replyCountText }})</text>
+                        <text class="up-arrow">›</text>
                     </div>
                 </div>
                 <div class="desc-block" @click="toggleDesc">
@@ -93,8 +132,8 @@
                 </div>
                 <div class="related-block">
                     <text class="block-title">相关推荐</text>
-                    <div class="related-loading-wrap">
-                        <loading v-if="relatedLoading" :visible="true" text="加载中..."></loading>
+                    <div v-if="relatedLoading" class="related-loading-wrap">
+                        <loading :visible="true" text="加载中..."></loading>
                     </div>
                     <empty
                         v-else-if="relatedError"
@@ -129,6 +168,9 @@
             </div>
             <empty v-else :visible="true" message="暂无内容"></empty>
         </scroller>
+        <div v-if="toast" class="toast">
+            <text class="toast-text">{{ toast }}</text>
+        </div>
     </div>
 </template>
 

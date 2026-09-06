@@ -109,6 +109,8 @@ Response Fetch::fetch(const std::string &url, const FetchOptions &options)
     ASSERT_CURL_OK(curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, options.followRedirects ? 1L : 0L));
     ASSERT_CURL_OK(curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L));
     ASSERT_CURL_OK(curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 0L));
+    // 空串启用 libcurl 自动解压 gzip/deflate（B 站弹幕等接口强制压缩响应）
+    ASSERT_CURL_OK(curl_easy_setopt(curl, CURLOPT_ACCEPT_ENCODING, ""));
 
     if (options.cancelled)
     {

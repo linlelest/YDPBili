@@ -10,7 +10,9 @@
     "dynamics": "pages/dynamics/dynamics.vue",
     "history": "pages/history/history.vue",
     "settings": "pages/settings/settings.vue",
-    "feed": "pages/feed/feed.vue"
+    "feed": "pages/feed/feed.vue",
+    "userSpace": "pages/userSpace/userSpace.vue",
+    "comments": "pages/comments/comments.vue"
   },
   "options": {
     "style": {

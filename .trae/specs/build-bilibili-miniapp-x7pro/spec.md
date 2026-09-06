@@ -157,3 +157,56 @@ falcon miniapp 运行时无现成视频播放组件，必须先做技术验证�
 
 ## REMOVED Requirements
 （无）
+
+---
+
+# v2 增量需求（用户 2026-09 补充，已批准）
+
+## ADDED Requirements
+
+### Requirement: 视频画面播放（硬性）
+视频功能 SHALL 落地真实画面渲染：GitHub Actions 构建时交叉编译 ffmpeg（H.264/AAC 解码）与 alsa-lib，开启 `HAVE_FFMPEG=ON`/`HAVE_ALSA=ON` 编入 Media JSAPI；播放器按降级链输出视频帧（falcon image base64 刷新），宿主 `<video>` 可用则优先。
+
+#### Scenario: 播放含画面的视频
+- **WHEN** 用户播放任意视频
+- **THEN** 播放器按解码器设置输出画面（软解帧或系统 video 组件），且音频可听；不可用时明确提示降级原因
+
+### Requirement: 拼音输入软键盘
+搜索页软键盘 SHALL 支持拼音输入：字母键盘 + 候选栏（拼音串匹配候选汉字/词，按频度排序，点击候选上屏），并支持大小写字母、空格、退格、确认与常见符号面板。
+
+#### Scenario: 拼音输入中文
+- **WHEN** 用户键入 `bilibili` 或 `bzhan`
+- **THEN** 候选栏出现对应汉字/词（如 哔哩哔哩/B站），点击候选追加到输入框
+
+### Requirement: 评论区页
+系统 SHALL 提供评论区页：按 aid/type=1 拉取评论列表（热评/最新，分页），显示头像/昵称/等级/内容/点赞数/时间；登录用户可发送新评论（POST reply/add，csrf=bili_jct），未登录提示并引导登录；视频详情页提供"评论区"入口按钮（含评论数）。
+
+#### Scenario: 发送评论
+- **WHEN** 已登录用户在评论区输入内容并点发送
+- **THEN** 接口返回 code=0，新评论出现在列表顶部；失败（12002 关闭/12016 敏感词等）显示对应文案
+
+### Requirement: 用户主页
+系统 SHALL 提供用户主页（userSpace）：展示头像、用户名、简介、等级、粉丝/关注数，提供三个 Tab：视频（/x/space/wbi/arc/search，wbi 签名分页）、专栏（/x/space/article 分页）、动态（feed/space 端点，不可用则降级提示）；视频详情页创作者头像/昵称可点击进入其主页。
+
+### Requirement: 视频互动（点赞/投币/关注）
+视频详情页 SHALL 提供点赞、投币（1/2 币）、关注按钮：调用 like/coin/add/relation/modify（均带 csrf），页面加载时查询已有状态（has/like、coins、relation）回显；未登录点击引导登录。
+
+### Requirement: 播放器字幕
+播放器 SHALL 支持外挂字幕：调 `/x/player/wbi/v2` 获取字幕轨道（AI 字幕 + 创作者 CC 字幕，含多语言），支持开关与语言切换，按播放进度渲染当前字幕句于画面下方字幕条；未登录时轨道为空则提示。
+
+### Requirement: 播放器弹幕
+播放器 SHALL 支持弹幕：拉取弹幕（XML list.so 优先，protobuf seg.so 手写解码降级），顶部/滚动弹幕带简化渲染（同屏上限保护），支持开关；设置页支持弹幕默认开关与弹幕字体大小，播放器实时生效。
+
+## MODIFIED Requirements
+
+### Requirement: 搜索页（v2）
+搜索结果 SHALL 提供"视频/专栏/用户"三个分类 Tab（搜索关键词后可切换）：视频→视频详情、专栏→文章详情、用户→用户主页；分页独立维护。
+
+### Requirement: 设置页（v2）
+在原有画质/倍速/解码器之上增加：弹幕默认开关、弹幕字体大小（小/标准/大）；持久化并被播放器读取。
+
+## Impact（v2）
+- 新增页面：userSpace、comments（app.json 已注册）
+- 新增服务：api/space.js、api/reply.js、api/interaction.js、api/subtitle.js、api/danmaku.js、utils/pinyin（词库+引擎）
+- 修改：search 页（三分类）、soft-keyboard（拼音）、videoDetail（互动+入口+创作者跳转）、player（字幕+弹幕层）、settings（弹幕项）、services/settings.js（新字段）
+- CI：build_for_x7.yml 增加 ffmpeg + alsa 交叉编译步骤并开启 HAVE_FFMPEG/HAVE_ALSA

@@ -22,7 +22,8 @@ import Loading from '../../components/loading.vue';
 import VideoCard from '../../components/video-card.vue';
 import ArticleCard from '../../components/article-card.vue';
 import SoftKeyboard from './soft-keyboard.vue';
-import { ensureSearchReady, searchVideos, searchArticles } from '../../services/api/search.js';
+import UserCard from './user-card.vue';
+import { ensureSearchReady, searchVideos, searchArticles, searchUsers } from '../../services/api/search.js';
 import { storageGet, storageSet } from '../../services/env.js';
 
 const HISTORY_KEY = 'bilibili_search_history';
@@ -68,6 +69,7 @@ const page = defineComponent({
     loading: Loading,
     'video-card': VideoCard,
     'article-card': ArticleCard,
+    'user-card': UserCard,
     'soft-keyboard': SoftKeyboard,
   },
   data() {
@@ -77,12 +79,16 @@ const page = defineComponent({
       keyboardVisible: true,
       videos: [],
       articles: [],
+      users: [],
       videoPage: 1,
       articlePage: 1,
+      userPage: 1,
       videoTotal: 0,
       articleTotal: 0,
+      userTotal: 0,
       videoPageFull: false,
       articlePageFull: false,
+      userPageFull: false,
       loading: false,
       loadingMore: false,
       searched: false,
@@ -93,13 +99,24 @@ const page = defineComponent({
   },
   computed: {
     currentList() {
-      return this.activeTab === 'video' ? this.videos : this.articles;
+      if (this.activeTab === 'video') return this.videos;
+      if (this.activeTab === 'user') return this.users;
+      return this.articles;
     },
     currentTotal() {
-      return this.activeTab === 'video' ? this.videoTotal : this.articleTotal;
+      if (this.activeTab === 'video') return this.videoTotal;
+      if (this.activeTab === 'user') return this.userTotal;
+      return this.articleTotal;
     },
     currentPageFull() {
-      return this.activeTab === 'video' ? this.videoPageFull : this.articlePageFull;
+      if (this.activeTab === 'video') return this.videoPageFull;
+      if (this.activeTab === 'user') return this.userPageFull;
+      return this.articlePageFull;
+    },
+    currentPage() {
+      if (this.activeTab === 'video') return this.videoPage;
+      if (this.activeTab === 'user') return this.userPage;
+      return this.articlePage;
     },
     hasMore() {
       if (this.currentPageFull !== true) return false;
@@ -198,12 +215,16 @@ const page = defineComponent({
         this.searched = false;
         this.videos = [];
         this.articles = [];
+        this.users = [];
         this.videoPage = 1;
         this.articlePage = 1;
+        this.userPage = 1;
         this.videoTotal = 0;
         this.articleTotal = 0;
+        this.userTotal = 0;
         this.videoPageFull = false;
         this.articlePageFull = false;
+        this.userPageFull = false;
         return;
       }
       this.keyword = kw;
@@ -211,12 +232,16 @@ const page = defineComponent({
       this.saveHistory(kw);
       this.videos = [];
       this.articles = [];
+      this.users = [];
       this.videoPage = 1;
       this.articlePage = 1;
+      this.userPage = 1;
       this.videoTotal = 0;
       this.articleTotal = 0;
+      this.userTotal = 0;
       this.videoPageFull = false;
       this.articlePageFull = false;
+      this.userPageFull = false;
       this.activeTab = 'video';
       this.searched = true;
       this.resetError();
@@ -240,6 +265,13 @@ const page = defineComponent({
           this.videoPage = page;
           this.videoTotal = res.total || 0;
           this.videoPageFull = (res.items || []).length >= PAGE_SIZE;
+        } else if (this.activeTab === 'user') {
+          const res = await searchUsers(kw, page, PAGE_SIZE);
+          const items = res.items || [];
+          this.users = append ? this.users.concat(items) : items;
+          this.userPage = page;
+          this.userTotal = res.total || 0;
+          this.userPageFull = items.length >= PAGE_SIZE;
         } else {
           const res = await searchArticles(kw, page, PAGE_SIZE);
           const items = res.items || [];
@@ -257,8 +289,7 @@ const page = defineComponent({
     },
     loadMore() {
       if (!this.hasMore || this.loading || this.loadingMore) return;
-      const page = (this.activeTab === 'video' ? this.videoPage : this.articlePage) + 1;
-      this.loadPage(page, true);
+      this.loadPage(this.currentPage + 1, true);
     },
     openVideo(item) {
       if (!item || !item.bvid) return;
@@ -272,6 +303,14 @@ const page = defineComponent({
       if (!item || !item.id) return;
       try {
         $falcon.navTo('article', { id: item.id });
+      } catch (err) {
+        // 目标页面未就绪时忽略跳转
+      }
+    },
+    openUser(item) {
+      if (!item || !item.mid) return;
+      try {
+        $falcon.navTo('userSpace', { mid: item.mid });
       } catch (err) {
         // 目标页面未就绪时忽略跳转
       }

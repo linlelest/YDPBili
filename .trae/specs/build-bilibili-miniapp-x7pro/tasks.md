@@ -139,3 +139,69 @@
 - Task 7 依赖 {Task 1, Task 2, Task 6}；Task 8 依赖 Task 7
 - Task 9 依赖 {Task 2, Task 3}；Task 10 依赖 Task 2；Task 11 依赖 {Task 1, Task 2}
 - Task 12 依赖 {Task 3..Task 11}
+
+---
+
+# v2 增量任务（用户 2026-09 补充）
+
+> 全局硬性要求沿用：每个 Task 执行者动手前 MUST ≥2 轮联网搜索并在总结记录结论。
+> 调研基线（主线程已完成 2 轮）：字幕=player/wbi/v2→subtitles[{lan,lan_doc,subtitle_url}]→body[{from,to,content}]（未登录列表为空）；弹幕=XML list.so?oid=cid 优先、seg.so protobuf（field: id=1,progress=2,mode=3,fontsize=4,color=5,midHash=6,content=7）降级；评论=reply/main 列表 + reply/add(type=1&oid=aid&message&plat=1&csrf)；点赞=archive/like(like=1|2)；投币=coin/add(multiply 1|2&select_like)；关注=relation/modify(fid&act)（act 语义需核实）；状态=has/like、archive/coins、relation?fid；用户=web-interface/card + space/wbi/arc/search(wbi) + space/article；拼音=pinyin-pro 为正向库，输入法需自建反向词典（常用字+词组 JSON）。
+
+- [ ] Task 13: 拼音输入软键盘（v2）
+  - [ ] SubTask 13.1: 反向拼音词典数据（常用汉字+常用词组，拼音→候选，按频度排序）与匹配引擎 utils/pinyin
+  - [ ] SubTask 13.2: soft-keyboard 升级：拼音模式候选栏、大小写切换、符号面板、空格/退格/确认
+  - 验证：Node 层词典引擎单测通过；键盘组件事件兼容 search 页既有 input/backspace/confirm 约定
+  - 独占文件：pages/search/soft-keyboard.vue、ui/src/utils/pinyin*（不得改 search.js）
+
+- [ ] Task 14: 搜索页三分类（视频/专栏/用户）
+  - [ ] SubTask 14.1: api/search.js 增加 searchUsers（wbi/search/type search_type=user）
+  - [ ] SubTask 14.2: search 页三 Tab 切换（独立分页），用户结果卡（头像/昵称/粉丝/签名）→ userSpace
+  - 验证：node --check；三 Tab 互不干扰
+  - 独占文件：pages/search/{search.vue,search.js,search.less}、services/api/search.js
+
+- [ ] Task 15: 用户主页
+  - [ ] SubTask 15.1: api/space.js：card+acc/info 用户信息、arc/search 视频、space/article 专栏、feed/space 动态（端点核实，不可用降级）
+  - [ ] SubTask 15.2: userSpace 页：头部（头像/昵称/等级/简介/粉丝）+ 视频/专栏/动态三 Tab 分页
+  - 验证：node --check；从详情页创作者入口可进入
+  - 独占文件：pages/userSpace/*、services/api/space.js
+
+- [ ] Task 16: 评论区页 + 发送评论
+  - [ ] SubTask 16.1: api/reply.js：reply/main 列表（热评/最新、分页）、reply/add 发送（csrf）
+  - [ ] SubTask 16.2: comments 页：列表渲染 + 发送框（软键盘复用）+ 未登录引导；错误码文案（12002/12015/12016/12051）
+  - 验证：node --check
+  - 独占文件：pages/comments/*、services/api/reply.js
+
+- [ ] Task 17: 视频详情页互动改造（v2）
+  - [ ] SubTask 17.1: api/interaction.js：like/coin/add/triple/relation-modify + 状态查询三接口
+  - [ ] SubTask 17.2: videoDetail 改造：创作者行可点击→userSpace；"评论区(n)"入口按钮→comments；点赞/投币/关注交互与状态回显，未登录引导
+  - 验证：node --check
+  - 独占文件：pages/videoDetail/*、services/api/interaction.js
+
+- [ ] Task 18: 播放器字幕 + 弹幕
+  - [ ] SubTask 18.1: api/subtitle.js（wbi/player/v2 轨道 + 字幕 JSON 下载）与 api/danmaku.js（XML 优先 + protobuf 手写解码降级）
+  - [ ] SubTask 18.2: player 页：字幕条渲染（按进度匹配 from/to）、语言切换面板、开关；弹幕层（滚动/顶部带、同屏≤5、设置字号），开关按钮
+  - 验证：node --check；弹幕字幕均随播放进度正确显示（逻辑层）
+  - 独占文件：pages/player/*、services/api/{subtitle.js,danmaku.js}
+
+- [ ] Task 19: 设置页弹幕项（v2）
+  - [ ] SubTask 19.1: services/settings.js 增加 danmakuEnabled(默认 true)/danmakuFontSize(18/25/36)
+  - [ ] SubTask 19.2: settings 页新增弹幕分组（默认开关、字号），即时持久化
+  - 验证：node --check
+  - 独占文件：pages/settings/*、services/settings.js
+
+- [ ] Task 20: CI 视频功能落地（ffmpeg+alsa 交叉编译）
+  - [ ] SubTask 20.1: build_for_x7.yml 增加步骤：apt 依赖 → tools/ci-build-deps.sh（交叉编译 alsa-lib + ffmpeg 静态库至 jsapi/thirdparty）→ cmake -DHAVE_FFMPEG=ON -DHAVE_ALSA=ON
+  - [ ] SubTask 20.2: 核对 Media/AudioSink 编译路径在 CI 下完整（ALSA 实现编入），产物 .amr 上传
+  - 验证：GitHub Actions 构建全绿并产出 .amr
+  - 独占文件：.github/workflows/build_for_x7.yml、tools/ci-build-deps.sh、jsapi/CMakeLists.txt（如需）
+
+- [ ] Task 21: v2 集成回归 + GitHub 构建交付
+  - [ ] SubTask 21.1: 全量静态回归（node --check 全部、import 一致性、新页面路由核对）
+  - [ ] SubTask 21.2: commit + push 触发 Actions；跟踪 run 结果，修复报错直至绿
+  - [ ] SubTask 21.3: 真机回归（字幕/弹幕/评论/互动/用户主页/拼音）待设备，问题清单记录
+  - 依赖：Task 13..20
+
+# v2 Task Dependencies
+- Task 13/14 并行（不同文件）；Task 15/16/17/18/19 并行（各自独占文件）
+- Task 20 独立（CI）；Task 21 依赖 13..20
+- cross-ref：Task 14 用户结果 → userSpace（Task 15）；Task 16/17 共享路由已由主线程注册

@@ -45,6 +45,7 @@ set(CMAKE_FIND_ROOT_PATH
     "${TOOLCHAIN_TARGET_DIR}/sysroot"
     "${TOOLCHAIN_TARGET_DIR}"
     "${CMAKE_SOURCE_DIR}/lib"
+    "${CMAKE_SOURCE_DIR}/thirdparty"
 )
 
 # 5. 交叉编译关键变量打印（红色高亮）
@@ -119,20 +120,19 @@ option(HAVE_FFMPEG "Enable ffmpeg-based Media JSAPI (Bilibili miniapp)" OFF)
 set(FFMPEG_ROOT "${CMAKE_SOURCE_DIR}/thirdparty/ffmpeg" CACHE PATH "ffmpeg install prefix (libavcodec/libavformat/libavutil/libswresample/libswscale)")
 
 if(HAVE_FFMPEG)
-    find_library(FFMPEG_AVCODEC_LIB avcodec PATHS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
-    find_library(FFMPEG_AVFORMAT_LIB avformat PATHS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
-    find_library(FFMPEG_AVUTIL_LIB avutil PATHS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
-    find_library(FFMPEG_SWRESAMPLE_LIB swresample PATHS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
-    find_library(FFMPEG_SWSCALE_LIB swscale PATHS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
+    find_library(FFMPEG_AVCODEC_LIB avcodec HINTS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
+    find_library(FFMPEG_AVFORMAT_LIB avformat HINTS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
+    find_library(FFMPEG_AVUTIL_LIB avutil HINTS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
+    find_library(FFMPEG_SWRESAMPLE_LIB swresample HINTS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
+    find_library(FFMPEG_SWSCALE_LIB swscale HINTS ${FFMPEG_ROOT}/lib NO_DEFAULT_PATH REQUIRED)
     target_include_directories(${LIB_NAME} PRIVATE ${FFMPEG_ROOT}/include)
     target_compile_definitions(${LIB_NAME} PRIVATE HAVE_FFMPEG)
     target_link_libraries(${LIB_NAME} PRIVATE
-        ${FFMPEG_AVCODEC_LIB}
         ${FFMPEG_AVFORMAT_LIB}
-        ${FFMPEG_AVUTIL_LIB}
-        ${FFMPEG_SWRESAMPLE_LIB}
+        ${FFMPEG_AVCODEC_LIB}
         ${FFMPEG_SWSCALE_LIB}
-        z
+        ${FFMPEG_SWRESAMPLE_LIB}
+        ${FFMPEG_AVUTIL_LIB}
     )
     message(STATUS "Media JSAPI: HAVE_FFMPEG=ON, ffmpeg at ${FFMPEG_ROOT}")
 endif()
@@ -145,16 +145,17 @@ option(HAVE_ALSA "Enable ALSA (libasound) audio sink for Media JSAPI" OFF)
 option(HAVE_TINYALSA "Enable tinyalsa (libtinyalsa) audio sink for Media JSAPI" OFF)
 
 if(HAVE_ALSA)
-    find_path(ALSA_INCLUDE_DIR alsa/asoundlib.h PATHS ${FFMPEG_ROOT}/../alsa/include ${CMAKE_SOURCE_DIR}/thirdparty/alsa/include NO_DEFAULT_PATH)
-    find_library(ALSA_LIBRARY asound PATHS ${CMAKE_SOURCE_DIR}/thirdparty/alsa/lib ${FFMPEG_ROOT}/../alsa/lib NO_DEFAULT_PATH)
+    find_path(ALSA_INCLUDE_DIR alsa/asoundlib.h HINTS ${CMAKE_SOURCE_DIR}/thirdparty/alsa/include ${FFMPEG_ROOT}/../alsa/include NO_DEFAULT_PATH)
+    find_library(ALSA_LIBRARY asound HINTS ${CMAKE_SOURCE_DIR}/thirdparty/alsa/lib ${FFMPEG_ROOT}/../alsa/lib NO_DEFAULT_PATH)
     if(NOT ALSA_LIBRARY)
         message(FATAL_ERROR "HAVE_ALSA=ON 但未找到 libasound，请把笔端 /usr/lib/libasound.so* 放入 jsapi/thirdparty/alsa/lib")
     endif()
-    if(ALSA_INCLUDE_DIR)
-        target_include_directories(${LIB_NAME} PRIVATE ${ALSA_INCLUDE_DIR})
+    if(NOT ALSA_INCLUDE_DIR)
+        message(FATAL_ERROR "HAVE_ALSA=ON 但未找到 alsa/asoundlib.h，请确认 jsapi/thirdparty/alsa/include 完整")
     endif()
+    target_include_directories(${LIB_NAME} PRIVATE ${ALSA_INCLUDE_DIR})
     target_compile_definitions(${LIB_NAME} PRIVATE HAVE_ALSA)
-    target_link_libraries(${LIB_NAME} PRIVATE ${ALSA_LIBRARY})
+    target_link_libraries(${LIB_NAME} PRIVATE ${ALSA_LIBRARY} pthread dl m)
     message(STATUS "Media JSAPI audio sink: ALSA")
 elseif(HAVE_TINYALSA)
     find_path(TINYALSA_INCLUDE_DIR tinyalsa/asoundlib.h PATHS ${CMAKE_SOURCE_DIR}/thirdparty/tinyalsa/include NO_DEFAULT_PATH)

@@ -1,0 +1,283 @@
+// Copyright (C) 2025 Bilibili miniapp contributors
+//
+// This file is part of miniapp.
+//
+// miniapp is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// miniapp is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with miniapp. If not, see <https://www.gnu.org/licenses/>.
+
+@import url('../../styles/theme.less');
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.video-row {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 8px;
+    padding-bottom: 4px;
+}
+
+.video-title {
+    color: @text-secondary;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.tabs {
+    width: @page-width;
+    height: 44px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: @page-pad;
+    border-bottom-width: 1px;
+    border-bottom-color: @divider;
+}
+
+.tab-item {
+    width: 88px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-text {
+    color: @text-secondary;
+    font-size: @font-base;
+}
+
+.tab-text-active {
+    color: @primary;
+    font-weight: bold;
+}
+
+.tab-line {
+    position: absolute;
+    bottom: 4px;
+    width: 48px;
+    height: 3px;
+    border-radius: @radius-round;
+    background-color: @primary;
+}
+
+.tabs-total {
+    flex: 1;
+    height: 44px;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: @page-pad;
+}
+
+.tabs-total-text {
+    color: @text-disabled;
+    font-size: @font-xs;
+}
+
+.list-area {
+    flex: 1;
+}
+
+.cmt-item {
+    width: @page-width;
+    flex-direction: row;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom-width: 1px;
+    border-bottom-color: @divider;
+}
+
+.cmt-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: @card-pressed;
+}
+
+.cmt-avatar-holder {
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background-color: @card-pressed;
+    align-items: center;
+    justify-content: center;
+}
+
+.cmt-avatar-holder-text {
+    color: @text-secondary;
+    font-size: @font-md;
+}
+
+.cmt-main {
+    flex: 1;
+    margin-left: 10px;
+}
+
+.cmt-head {
+    flex-direction: row;
+    align-items: center;
+}
+
+.cmt-uname {
+    color: @text;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.cmt-top-badge {
+    margin-left: 8px;
+    padding-left: 6px;
+    padding-right: 6px;
+    color: @primary;
+    font-size: @font-xs;
+    line-height: 24px;
+    border-width: 1px;
+    border-color: @primary;
+    border-radius: @radius-sm;
+}
+
+.cmt-level {
+    margin-left: 8px;
+    color: @text-disabled;
+    font-size: @font-xs;
+}
+
+.cmt-content {
+    margin-top: 6px;
+    color: @text;
+    font-size: @font-base;
+    line-height: 34px;
+    lines: 6;
+    text-overflow: ellipsis;
+}
+
+.cmt-foot {
+    margin-top: 8px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cmt-foot-text {
+    color: @text-disabled;
+    font-size: @font-xs;
+    margin-right: 16px;
+}
+
+.cmt-foot-reply {
+    color: @text-secondary;
+    font-size: @font-xs;
+}
+
+.load-more {
+    width: @page-width;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
+.load-more-text {
+    color: @primary;
+    font-size: @font-base;
+}
+
+.no-more {
+    width: @page-width;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-more-text {
+    color: @text-disabled;
+    font-size: @font-sm;
+}
+
+.list-bottom-pad {
+    width: @page-width;
+    height: 16px;
+}
+
+.composer {
+    width: @page-width;
+    height: 64px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    background-color: @card;
+    border-top-width: 1px;
+    border-top-color: @divider;
+}
+
+.composer-input {
+    flex: 1;
+    height: 44px;
+    border-radius: @radius-round;
+    background-color: @card-pressed;
+    justify-content: center;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.composer-placeholder {
+    color: @text-disabled;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.composer-text {
+    color: @text;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.composer-send {
+    width: 88px;
+    height: 44px;
+    margin-left: 10px;
+    border-radius: @radius-round;
+    background-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.composer-send-text {
+    color: #ffffff;
+    font-size: @font-sm;
+}
+
+.toast {
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    bottom: 420px;
+    background-color: @mask;
+    border-radius: @radius-sm;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast-text {
+    color: #ffffff;
+    font-size: @font-base;
+    text-align: center;
+}
