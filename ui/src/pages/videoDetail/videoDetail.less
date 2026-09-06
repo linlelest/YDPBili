@@ -1,0 +1,338 @@
+// Copyright (C) 2025 Bilibili miniapp contributors
+//
+// This file is part of miniapp.
+//
+// miniapp is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// miniapp is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with miniapp. If not, see <https://www.gnu.org/licenses/>.
+
+@import url('../../styles/theme.less');
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.body {
+    flex: 1;
+}
+
+.loading-wrap {
+    padding-top: 160px;
+    align-items: center;
+}
+
+.error-wrap {
+    padding-top: 140px;
+    align-items: center;
+}
+
+.btn-retry {
+    margin-top: 24px;
+    width: 160px;
+    height: 64px;
+    border-radius: @radius-round;
+    background-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-retry-text {
+    color: #ffffff;
+    font-size: @font-base;
+}
+
+.content {
+    padding-bottom: 32px;
+}
+
+.cover-wrap {
+    width: @page-width;
+    height: 158px;
+    background-color: @card-pressed;
+    position: relative;
+}
+
+.cover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @page-width;
+    height: 158px;
+}
+
+.cover-placeholder {
+    align-items: center;
+    justify-content: center;
+    background-color: @card-pressed;
+}
+
+.cover-placeholder-text {
+    color: @text-disabled;
+    font-size: @font-md;
+}
+
+.head {
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 16px;
+}
+
+.video-title {
+    color: @text;
+    font-size: @font-md;
+    font-weight: bold;
+    line-height: 40px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.up-row {
+    margin-top: 16px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.avatar {
+    width: @avatar-size;
+    height: @avatar-size;
+    border-radius: @radius-round;
+    background-color: @card-pressed;
+}
+
+.up-name {
+    flex: 1;
+    margin-left: 12px;
+    color: @text;
+    font-size: @font-base;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.pub-date {
+    margin-left: 12px;
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.stat-row {
+    margin-top: 16px;
+    flex-direction: row;
+}
+
+.stat-item {
+    flex: 1;
+    align-items: center;
+}
+
+.stat-value {
+    color: @text;
+    font-size: @font-base;
+    font-weight: bold;
+}
+
+.stat-label {
+    margin-top: 4px;
+    color: @text-secondary;
+    font-size: @font-xs;
+}
+
+.desc-block {
+    margin-top: 16px;
+    margin-left: @page-pad;
+    margin-right: @page-pad;
+    padding: @card-pad;
+    background-color: @card;
+    border-radius: @radius-md;
+}
+
+.desc-text {
+    color: @text-secondary;
+    font-size: @font-base;
+    line-height: 36px;
+    text-overflow: ellipsis;
+}
+
+.desc-toggle {
+    margin-top: 8px;
+    color: @primary;
+    font-size: @font-sm;
+}
+
+.block-title {
+    color: @text;
+    font-size: @font-base;
+    font-weight: bold;
+}
+
+.pages-block {
+    margin-top: 24px;
+    margin-left: @page-pad;
+    margin-right: @page-pad;
+}
+
+.page-item {
+    margin-top: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: @card;
+    border-radius: @radius-sm;
+    border-width: 1px;
+    border-color: @divider;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-item-active {
+    margin-top: 12px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: @card;
+    border-radius: @radius-sm;
+    border-width: 1px;
+    border-color: @primary;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-name {
+    flex: 1;
+    margin-right: 12px;
+    color: @text;
+    font-size: @font-base;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.page-name-active {
+    flex: 1;
+    margin-right: 12px;
+    color: @primary;
+    font-size: @font-base;
+    font-weight: bold;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.page-duration {
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.actions {
+    margin-top: 24px;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+}
+
+.btn-play {
+    height: 80px;
+    border-radius: @radius-round;
+    background-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-play-text {
+    color: #ffffff;
+    font-size: @font-md;
+    font-weight: bold;
+}
+
+.btn-feed {
+    margin-top: 12px;
+    height: 64px;
+    border-radius: @radius-round;
+    background-color: @card;
+    border-width: 1px;
+    border-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-feed-text {
+    color: @primary;
+    font-size: @font-base;
+}
+
+.related-block {
+    margin-top: 24px;
+    margin-left: @page-pad;
+    margin-right: @page-pad;
+}
+
+.related-loading-wrap {
+    margin-top: 12px;
+}
+
+.related-list {
+    margin-top: 12px;
+}
+
+.related-item {
+    margin-bottom: 12px;
+    padding: @card-pad;
+    background-color: @card;
+    border-radius: @radius-md;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.related-cover {
+    width: 120px;
+    height: 68px;
+    border-radius: @radius-sm;
+    background-color: @card-pressed;
+}
+
+.related-cover-placeholder {
+    background-color: @card-pressed;
+}
+
+.related-info {
+    flex: 1;
+    margin-left: 12px;
+}
+
+.related-title {
+    color: @text;
+    font-size: @font-base;
+    line-height: 32px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.related-meta {
+    margin-top: 8px;
+    color: @text-secondary;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.related-empty {
+    margin-top: 12px;
+    padding: 32px;
+    align-items: center;
+}
+
+.related-empty-text {
+    color: @text-secondary;
+    font-size: @font-base;
+}

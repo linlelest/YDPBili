@@ -1,0 +1,365 @@
+// Copyright (C) 2025 Bilibili miniapp contributors
+//
+// This file is part of miniapp.
+//
+// miniapp is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// miniapp is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with miniapp. If not, see <https://www.gnu.org/licenses/>.
+
+@import url('../../styles/theme.less');
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+// 视频区：280 宽 16:9 ≈ 158px
+.stage {
+    width: @page-width;
+    height: 158px;
+    background-color: #000000;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+}
+
+.video {
+    width: @page-width;
+    height: 158px;
+}
+
+.stage-inner {
+    width: @page-width;
+    height: 158px;
+}
+
+.frame {
+    width: @page-width;
+    height: 158px;
+    background-color: #000000;
+}
+
+.cover {
+    width: @page-width;
+    height: 158px;
+}
+
+.cover-placeholder {
+    background-color: @card;
+    justify-content: center;
+    align-items: center;
+}
+
+.cover-placeholder-text {
+    color: @text-disabled;
+    font-size: @font-base;
+}
+
+.stage-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @page-width;
+    height: 158px;
+    justify-content: center;
+    align-items: center;
+}
+
+.stage-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @page-width;
+    height: 158px;
+    background-color: @mask;
+    justify-content: center;
+    align-items: center;
+}
+
+.wave-row {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-bottom: 12px;
+}
+
+.wave-bar {
+    width: 8px;
+    border-radius: @radius-round;
+    background-color: @primary;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.big-play {
+    width: 72px;
+    height: 72px;
+    border-radius: 36px;
+    background-color: @mask;
+    border-width: 2px;
+    border-color: @primary;
+    justify-content: center;
+    align-items: center;
+}
+
+.big-play-text {
+    color: @primary;
+    font-size: 40px;
+}
+
+.unsupport-icon {
+    font-size: 44px;
+}
+
+// 模式 / 提示行
+.info-row {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 8px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.mode-text {
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.notice-text {
+    color: @warning;
+    font-size: @font-xs;
+    flex: 1;
+    text-align: right;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.buffer-row {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 4px;
+}
+
+.buffer-text {
+    color: @text-disabled;
+    font-size: @font-xs;
+}
+
+// unsupported 态
+.unsupport-card {
+    width: @page-width;
+    padding: 24px @page-pad;
+    align-items: center;
+}
+
+.unsupport-title {
+    color: @text-secondary;
+    font-size: @font-base;
+    text-align: center;
+    line-height: 36px;
+}
+
+.btn-settings {
+    margin-top: 20px;
+    width: 200px;
+    height: 64px;
+    border-radius: @radius-round;
+    background-color: @primary;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-settings-text {
+    color: #ffffff;
+    font-size: @font-base;
+}
+
+.btn-retry2 {
+    margin-top: 16px;
+    width: 200px;
+    height: 64px;
+    border-radius: @radius-round;
+    background-color: @card;
+    border-width: 1px;
+    border-color: @divider;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-retry2-text {
+    color: @text;
+    font-size: @font-base;
+}
+
+.error-card {
+    width: @page-width;
+    padding-top: 24px;
+    align-items: center;
+}
+
+// 控制栏
+.controls {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 8px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.big-btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 36px;
+    background-color: @primary;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+}
+
+.big-btn-text {
+    color: #ffffff;
+    font-size: 36px;
+}
+
+.progress-area {
+    flex: 1;
+}
+
+.progress-track {
+    width: 248px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: @divider;
+    justify-content: center;
+}
+
+.progress-buffer {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 8px;
+    border-radius: 4px;
+    background-color: @text-disabled;
+}
+
+.progress-fill {
+    position: absolute;
+    top: 2px;
+    left: 0;
+    height: 8px;
+    border-radius: 4px;
+    background-color: @primary;
+}
+
+.time-row {
+    width: 248px;
+    margin-top: 4px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.time-text {
+    color: @text-secondary;
+    font-size: @font-xs;
+}
+
+// 倍速 / 画质操作行
+.actions-row {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 12px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.action-btn {
+    width: 120px;
+    height: 56px;
+    border-radius: @radius-sm;
+    background-color: @card;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-text {
+    color: @text;
+    font-size: @font-sm;
+}
+
+// 画质面板
+.quality-panel {
+    margin-left: @page-pad;
+    margin-right: @page-pad;
+    margin-top: 12px;
+    border-radius: @radius-md;
+    background-color: @card;
+    padding: 12px;
+}
+
+.quality-limited {
+    color: @warning;
+    font-size: @font-xs;
+    margin-bottom: 8px;
+    line-height: 28px;
+}
+
+.quality-item {
+    height: 56px;
+    border-radius: @radius-sm;
+    justify-content: center;
+    padding-left: 12px;
+}
+
+.quality-item-current {
+    height: 56px;
+    border-radius: @radius-sm;
+    justify-content: center;
+    padding-left: 12px;
+    background-color: @card-pressed;
+}
+
+.quality-item-text {
+    color: @text-secondary;
+    font-size: @font-base;
+}
+
+.quality-item-text-current {
+    color: @primary;
+    font-size: @font-base;
+}
+
+// 标题信息
+.title-block {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 16px;
+}
+
+.title-text {
+    color: @text;
+    font-size: @font-md;
+    line-height: 38px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.subtitle-text {
+    margin-top: 6px;
+    color: @text-disabled;
+    font-size: @font-xs;
+}

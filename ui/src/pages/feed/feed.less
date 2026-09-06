@@ -1,0 +1,224 @@
+// 刷视频页样式 —— 280×936 全屏沉浸，深色主题
+@import url('../../styles/theme.less');
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: #000000;
+}
+
+// 手势区：全屏沉浸舞台，子层绝对定位叠加
+.stage {
+    position: relative;
+    width: @page-width;
+    height: 936px;
+    background-color: #000000;
+}
+
+// 播放 / 封面层
+.media {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @page-width;
+    height: 936px;
+    background-color: #000000;
+}
+
+.video {
+    width: @page-width;
+    height: 936px;
+}
+
+.media-inner {
+    width: @page-width;
+    height: 936px;
+    align-items: center;
+    justify-content: center;
+}
+
+.frame,
+.cover {
+    width: @page-width;
+    height: 936px;
+}
+
+.cover-placeholder {
+    background-color: @card;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover-placeholder-text {
+    color: @text-disabled;
+    font-size: @font-sm;
+}
+
+// 取流遮罩
+.media-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @page-width;
+    height: 936px;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.35);
+}
+
+// 左右箭头兜底热区（垂直居中两侧）
+.arrow-zone {
+    position: absolute;
+    top: 408px;
+    width: 44px;
+    height: 120px;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-left {
+    left: 0;
+}
+
+.arrow-right {
+    right: 0;
+}
+
+.arrow {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: @font-lg;
+}
+
+// 顶部栏：退出（左）+ 倍速（右上角快捷）
+.top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: @page-width;
+    height: 56px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+.exit-btn,
+.rate-btn {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    background-color: @mask;
+    border-radius: @radius-round;
+}
+
+.bar-btn-text {
+    color: #ffffff;
+    font-size: @font-sm;
+    line-height: 28px;
+}
+
+// 底部信息覆盖层：模式提示 / 内核提示 / 标题（两行）/ UP 主 / 序号
+.overlay {
+    position: absolute;
+    left: 16px;
+    bottom: 64px;
+    right: 16px;
+}
+
+.mode-hint {
+    color: @warning;
+    font-size: @font-xs;
+    line-height: 28px;
+    margin-bottom: 4px;
+}
+
+.notice {
+    color: @text-secondary;
+    font-size: @font-xs;
+    line-height: 28px;
+}
+
+.title {
+    color: #ffffff;
+    font-size: @font-base;
+    line-height: 32px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.up-name {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: @font-sm;
+    line-height: 30px;
+    margin-top: 4px;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.counter {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: @font-xs;
+    line-height: 26px;
+    margin-top: 2px;
+}
+
+// 进度细条
+.progress-track {
+    position: absolute;
+    left: 16px;
+    bottom: 36px;
+    width: 248px;
+    height: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+}
+
+.progress-fill {
+    height: 4px;
+    background-color: @primary;
+    border-radius: 2px;
+}
+
+// 底部提示（加载更多 / 边界提示）
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 8px;
+    width: @page-width;
+    align-items: center;
+}
+
+.tip {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: @font-xs;
+    line-height: 26px;
+}
+
+// 首屏 loading / 空态 / 错误态
+.state-zone {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+    align-items: center;
+    justify-content: center;
+}
+
+.retry-btn {
+    margin-top: 16px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: @primary;
+    border-radius: @radius-round;
+    align-items: center;
+}
+
+.retry-text {
+    color: #ffffff;
+    font-size: @font-base;
+}

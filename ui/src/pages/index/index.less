@@ -1,0 +1,125 @@
+// 主页（推荐页）样式 —— 280 宽设计基准，深色主题
+@import url('../../styles/theme.less');
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+// 顶部栏
+.top-bar {
+    height: @nav-height;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: @page-pad;
+    padding-right: 4px;
+    background-color: @bg;
+}
+
+.logo {
+    color: @primary;
+    font-size: @font-title;
+    font-weight: bold;
+}
+
+.actions {
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon-btn {
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    color: @text;
+    font-size: @font-md;
+}
+
+// 非致命提示横幅（如未登录）
+.notice-bar {
+    background-color: @warning;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+}
+
+.notice-text {
+    color: #000000;
+    font-size: @font-xs;
+    line-height: 26px;
+}
+
+// 手势区 + 左右箭头
+.stage {
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+}
+
+.arrow-zone {
+    width: 40px;
+    height: 160px;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow {
+    color: @text-secondary;
+    font-size: @font-lg;
+}
+
+.card-zone {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+// loading / empty / error 状态区
+.state-zone {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.retry-btn {
+    margin-top: 16px;
+    padding-left: 32px;
+    padding-right: 32px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: @primary;
+    border-radius: @radius-round;
+    align-items: center;
+}
+
+.retry-text {
+    color: #ffffff;
+    font-size: @font-base;
+}
+
+// 底部指示器
+.footer {
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 8px;
+}
+
+.counter {
+    color: @text;
+    font-size: @font-sm;
+    line-height: 28px;
+}
+
+.tip {
+    color: @text-secondary;
+    font-size: @font-xs;
+    line-height: 24px;
+}

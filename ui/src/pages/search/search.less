@@ -1,0 +1,191 @@
+// search 页样式（280 宽深色主题基准）
+// 布局预算：nav 56 + 搜索行 64 + tab 48 + 键盘 340（开）/ 历史 ~110（收起）→ 结果区 flex:1
+
+@import '../../styles/theme.less';
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.search-row {
+    width: @page-width;
+    height: 64px;
+    flex-direction: row;
+    align-items: center;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+}
+
+.input-box {
+    flex: 1;
+    height: 56px;
+    background-color: @card;
+    border-radius: @radius-round;
+    border-width: 1px;
+    border-color: @divider;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.input-text {
+    color: @text;
+    font-size: @font-base;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.input-placeholder {
+    color: @text-disabled;
+    font-size: @font-base;
+}
+
+.search-btn {
+    width: 88px;
+    height: 56px;
+    margin-left: 12px;
+    background-color: @primary;
+    border-radius: @radius-md;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn-text {
+    color: #ffffff;
+    font-size: @font-base;
+}
+
+.history-panel {
+    width: @page-width;
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 8px;
+    padding-bottom: 16px;
+}
+
+.history-head {
+    width: 248px;
+    height: 44px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.history-title {
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.history-clear {
+    width: 72px;
+    height: 44px;
+    color: @text-secondary;
+    font-size: @font-sm;
+    text-align: right;
+    line-height: 44px;
+}
+
+.history-chips {
+    width: 248px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.history-chip {
+    height: 44px;
+    background-color: @card;
+    border-radius: @radius-round;
+    align-items: center;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 8px;
+    margin-right: 12px;
+}
+
+.history-chip-text {
+    color: @text;
+    font-size: @font-sm;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.tabs {
+    width: @page-width;
+    height: 48px;
+    flex-direction: row;
+    background-color: @bg;
+    border-bottom-width: 1px;
+    border-bottom-color: @divider;
+}
+
+.tab-item {
+    flex: 1;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-text {
+    color: @text-secondary;
+    font-size: @font-md;
+}
+
+.tab-text-active {
+    color: @primary;
+}
+
+.tab-line {
+    width: 48px;
+    height: 4px;
+    background-color: @primary;
+    border-radius: @radius-round;
+    margin-top: 4px;
+}
+
+.result-area {
+    flex: 1;
+}
+
+.result-list {
+    width: @page-width;
+    padding: @card-pad @page-pad 0 @page-pad;
+}
+
+.list-item {
+    width: 248px;
+    margin-bottom: @card-gap;
+}
+
+.load-more {
+    width: 248px;
+    height: 72px;
+    margin-left: @page-pad;
+    margin-right: @page-pad;
+    margin-top: 4px;
+    margin-bottom: 24px;
+    background-color: @card;
+    border-radius: @radius-md;
+    align-items: center;
+    justify-content: center;
+}
+
+.load-more-text {
+    color: @text;
+    font-size: @font-base;
+}
+
+.no-more {
+    width: @page-width;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-more-text {
+    color: @text-disabled;
+    font-size: @font-sm;
+}

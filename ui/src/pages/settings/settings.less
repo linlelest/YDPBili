@@ -1,0 +1,154 @@
+@import '../../styles/theme.less';
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.body {
+    flex: 1;
+}
+
+.group-title {
+    color: @text-secondary;
+    font-size: @font-sm;
+    margin: 20px @page-pad 8px @page-pad;
+}
+
+.card {
+    background-color: @card;
+    border-radius: @radius-md;
+    margin: 0 @page-pad @card-gap @page-pad;
+    padding: @card-pad;
+}
+
+.item-label {
+    color: @text;
+    font-size: @font-base;
+}
+
+.chips {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+
+.chip {
+    background-color: @card-pressed;
+    border-radius: @radius-round;
+    padding: 8px 16px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.chip-active {
+    background-color: @primary;
+}
+
+.chip-text {
+    color: @text-secondary;
+    font-size: @font-xs;
+    text-align: center;
+}
+
+.chip-text-active {
+    color: #FFFFFF;
+    font-size: @font-xs;
+    text-align: center;
+}
+
+.item-note {
+    color: @text-secondary;
+    font-size: @font-xs;
+    margin-top: 4px;
+    line-height: 30px;
+}
+
+.decoder-item {
+    margin-top: 14px;
+}
+
+.decoder-desc {
+    color: @text-secondary;
+    font-size: @font-xs;
+    margin-top: 8px;
+    line-height: 30px;
+}
+
+.decoder-desc-active {
+    color: @text;
+}
+
+.action-row {
+    height: 72px;
+    justify-content: center;
+}
+
+.action-text {
+    color: @text;
+    font-size: @font-md;
+}
+
+.action-sub {
+    color: @text-secondary;
+    font-size: @font-xs;
+    margin-top: 4px;
+}
+
+.action-text-danger {
+    color: @danger;
+    font-size: @font-md;
+}
+
+.action-divider {
+    height: 1px;
+    background-color: @divider;
+}
+
+.about-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-key {
+    color: @text;
+    font-size: @font-base;
+}
+
+.about-value {
+    color: @text-secondary;
+    font-size: @font-base;
+}
+
+.about-desc {
+    color: @text-secondary;
+    font-size: @font-xs;
+    line-height: 32px;
+    margin-top: 12px;
+}
+
+.about-disclaimer {
+    color: @text-disabled;
+    font-size: @font-xs;
+    line-height: 32px;
+    margin-top: 8px;
+}
+
+.toast {
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    bottom: 140px;
+    background-color: @mask;
+    border-radius: @radius-sm;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast-text {
+    color: #FFFFFF;
+    font-size: @font-base;
+}

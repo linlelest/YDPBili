@@ -1,0 +1,58 @@
+name: Build For x7 & Upload AMR
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+env:
+  TOOLCHAIN_URL: https://github.com/penosext/Cloudpan/releases/download/toolchains/aarch64--glibc--stable-2018.11-1.tar.bz2
+  VERSIONINFO_URL: https://github.com/penosext/Cloudpan/releases/download/PenX7/X7versionInfo.tar.gz
+  DEVICE: x7
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: ''
+      - name: Install dependencies & toolchain
+        run: |
+          npm install -g pnpm@latest-10
+          pnpm install --verbose -C ./ui
+          mkdir -p ./jsapi/toolchains
+          wget -q ${{ env.TOOLCHAIN_URL }} -O ./jsapi/toolchains/aarch64--glibc--stable-2018.11-1.tar.bz2
+          tar -xjf ./jsapi/toolchains/aarch64--glibc--stable-2018.11-1.tar.bz2 -C ./jsapi/toolchains
+          wget -q ${{ env.VERSIONINFO_URL }}
+          tar -xf X7versionInfo.tar.gz -C ./jsapi
+      - name: Patch aiot-vue-cli for Node 18
+        run: bash tools/patch-ui.sh
+      - name: Patch DEVICE_MODEL & CMakeLists
+        run: |
+          if [ -f ./ui/src/pages/update/update.ts ]; then
+            sed -i "s/const DEVICE_MODEL = 'a6p'/const DEVICE_MODEL = '$DEVICE'/" ./ui/src/pages/update/update.ts
+          else
+            echo "ui/src/pages/update/update.ts 不存在，跳过 DEVICE_MODEL 替换"
+          fi
+          if ! grep -q 'CMAKE_DEPEND_INFO_SKIP' ./jsapi/CMakeLists.txt; then
+            sed -i '/project(/a\set(CMAKE_DEPEND_INFO_SKIP 1)\nset(CMAKE_LINK_DEPENDS_USE_LINKER 0)' ./jsapi/CMakeLists.txt
+          else
+            echo "jsapi/CMakeLists.txt 已含 CMAKE 依赖补丁，跳过"
+          fi
+      - name: Build
+        run: ./tools/build.sh -a
+      - name: Collect AMR files
+        run: |
+          find . -type f -iname '*.amr' > amr_files.txt || true
+          echo "Found $(wc -l < amr_files.txt) .amr files"
+          cat amr_files.txt
+      - name: Upload AMR artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: amr-files-x7
+          path: |
+            ./ui/*.amr
+            ./dist/*.amr
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,137 @@
+// Copyright (C) 2025 Bilibili miniapp contributors
+//
+// This file is part of miniapp.
+//
+// miniapp is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// miniapp is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with miniapp. If not, see <https://www.gnu.org/licenses/>.
+
+// 文章详情页样式（280×936 深色基准）。正文段按阅读规格：字号 26px、#EAEAEA、宽行距。
+
+@import url('../../styles/theme.less');
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.body {
+    flex: 1;
+}
+
+.loading-wrap {
+    padding-top: 160px;
+    align-items: center;
+}
+
+.error-wrap {
+    padding-top: 140px;
+    align-items: center;
+}
+
+.btn-retry {
+    margin-top: 24px;
+    width: 160px;
+    height: 64px;
+    border-radius: @radius-round;
+    background-color: @primary;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-retry-text {
+    color: #ffffff;
+    font-size: @font-base;
+}
+
+.content {
+    padding-bottom: 24px;
+}
+
+.head {
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 20px;
+}
+
+.article-title {
+    color: @text;
+    font-size: @font-lg;
+    font-weight: bold;
+    line-height: 48px;
+    lines: 2;
+    text-overflow: ellipsis;
+}
+
+.author-row {
+    margin-top: 16px;
+    flex-direction: row;
+    align-items: center;
+}
+
+.avatar {
+    width: @avatar-size;
+    height: @avatar-size;
+    border-radius: @radius-round;
+    background-color: @card-pressed;
+}
+
+.author-name {
+    flex: 1;
+    margin-left: 12px;
+    color: @text;
+    font-size: @font-base;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.pub-date {
+    margin-left: 12px;
+    color: @text-secondary;
+    font-size: @font-sm;
+}
+
+.head-divider {
+    margin-top: 20px;
+    height: 1px;
+    background-color: @divider;
+}
+
+.body-block {
+    padding-left: @page-pad;
+    padding-right: @page-pad;
+    padding-top: 8px;
+}
+
+.para {
+    margin-top: 16px;
+    color: @text;
+    font-size: 26px;
+    line-height: 44px;
+}
+
+.content-image {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    width: @page-width - @page-pad * 2;
+    height: 176px;
+    border-radius: @radius-sm;
+    background-color: @card-pressed;
+}
+
+.end-tip {
+    margin-top: 28px;
+    color: @text-disabled;
+    font-size: @font-sm;
+    text-align: center;
+}

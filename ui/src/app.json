@@ -1,0 +1,22 @@
+{
+  "pages": {
+    "index": "pages/index/index.vue",
+    "login": "pages/login/login.vue",
+    "search": "pages/search/search.vue",
+    "player": "pages/player/player.vue",
+    "videoDetail": "pages/videoDetail/videoDetail.vue",
+    "article": "pages/article/article.vue",
+    "mine": "pages/mine/mine.vue",
+    "dynamics": "pages/dynamics/dynamics.vue",
+    "history": "pages/history/history.vue",
+    "settings": "pages/settings/settings.vue",
+    "feed": "pages/feed/feed.vue"
+  },
+  "options": {
+    "style": {
+      "lessPaths": [
+        "styles"
+      ]
+    }
+  }
+}

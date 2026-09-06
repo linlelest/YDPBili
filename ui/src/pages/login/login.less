@@ -1,0 +1,208 @@
+@import '../../styles/theme.less';
+
+.page {
+    width: @page-width;
+    height: 936px;
+    background-color: @bg;
+}
+
+.body {
+    flex: 1;
+}
+
+.guest {
+    padding: 24px @page-pad 32px @page-pad;
+    align-items: center;
+}
+
+.headline {
+    color: @text;
+    font-size: @font-lg;
+    margin-top: 8px;
+}
+
+.subhead {
+    color: @text-secondary;
+    font-size: @font-base;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.qr-card {
+    padding: 10px;
+    background-color: #FFFFFF;
+    border-radius: @radius-md;
+}
+
+.qr-grid {
+    background-color: #FFFFFF;
+}
+
+.qr-row {
+    flex-direction: row;
+}
+
+.qr-cell {
+    background-color: #FFFFFF;
+}
+
+.qr-expired-mask {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    background-color: rgba(255, 255, 255, 0.92);
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-mask-block {
+    justify-content: center;
+    align-items: center;
+}
+
+.qr-mask-text {
+    color: #333333;
+    font-size: @font-sm;
+    text-align: center;
+    lines: 1;
+}
+
+.qr-mask-sub {
+    color: #666666;
+    font-size: @font-xs;
+    text-align: center;
+    margin-top: 8px;
+}
+
+.qr-loading-wrap {
+    background-color: #FFFFFF;
+    justify-content: center;
+    align-items: center;
+}
+
+.status {
+    color: @text;
+    font-size: @font-base;
+    margin-top: 20px;
+}
+
+.countdown {
+    color: @text-secondary;
+    font-size: @font-sm;
+    margin-top: 6px;
+}
+
+.btn {
+    width: 248px;
+    height: 72px;
+    border-radius: @radius-round;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: @primary;
+}
+
+.btn-primary:active {
+    background-color: @primary-dark;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    border-width: 1px;
+    border-color: @divider;
+    margin-top: 12px;
+}
+
+.btn-danger {
+    background-color: transparent;
+    border-width: 1px;
+    border-color: @danger;
+}
+
+.btn-text {
+    color: #FFFFFF;
+    font-size: @font-md;
+}
+
+.btn-ghost-text {
+    color: @text-secondary;
+    font-size: @font-md;
+}
+
+.btn-danger-text {
+    color: @danger;
+    font-size: @font-md;
+}
+
+.user {
+    padding: 48px @page-pad 32px @page-pad;
+    align-items: center;
+}
+
+.avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 48px;
+    margin-top: 24px;
+}
+
+.avatar-fallback {
+    width: 96px;
+    height: 96px;
+    border-radius: 48px;
+    background-color: @card;
+    color: @text-secondary;
+    font-size: 44px;
+    text-align: center;
+    line-height: 96px;
+    margin-top: 24px;
+}
+
+.uname {
+    color: @text;
+    font-size: @font-title;
+    margin-top: 16px;
+    lines: 1;
+    text-overflow: ellipsis;
+}
+
+.badges {
+    flex-direction: row;
+    margin-top: 12px;
+}
+
+.badge {
+    color: @text-secondary;
+    font-size: @font-sm;
+    background-color: @card;
+    border-radius: @radius-sm;
+    padding: 6px 12px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+
+.user-tip {
+    color: @text-secondary;
+    font-size: @font-sm;
+    margin-top: 12px;
+}
+
+.toast {
+    position: absolute;
+    left: 40px;
+    right: 40px;
+    bottom: 140px;
+    background-color: @mask;
+    border-radius: @radius-sm;
+    padding: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.toast-text {
+    color: #FFFFFF;
+    font-size: @font-base;
+}
